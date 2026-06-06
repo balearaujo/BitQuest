@@ -9,7 +9,7 @@ section .text
 
 validar_mov:
     mov rax, rdx       
-    imul rax, 15 ;tam de mi matriz (prueba)
+    imul rax, 60 ;tam de mi matriz (prueba)
     add rax, r8         
     movzx r10d, byte [rcx+ rax] 
     cmp r10b, 35 ; 35== '#'

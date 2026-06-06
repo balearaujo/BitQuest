@@ -20,22 +20,22 @@ int main() {
     while (1) {
         system("cls");
 
-        // Ventana 11x11 
-        //Prueba en chiquito primero
-        fInicio=posX-5;
+        // Ventana 20X20
+        //ya ahora si
+        fInicio=posX-11; //aqui la mitad
         if (fInicio<0) fInicio=0;
-        if (fInicio>4) fInicio=4;
+        if (fInicio>40) fInicio=40; //11-7=4 d antes  ==== 60-20=40
 
-        cInicio=posY -5;
+        cInicio=posY -11;
         if (cInicio<0) cInicio=0;
-        if (cInicio>4) cInicio=4;
+        if (cInicio>40) cInicio=40;
 
-        for (int f=fInicio; f < fInicio+11; f++) {
-            for (int c=cInicio; c<cInicio+11; c++) {
+        for (int f=fInicio; f < fInicio+20; f++) { //esto es d camara tia
+            for (int c=cInicio; c<cInicio+20; c++) {
                 if (f==posX && c==posY) {
                     printf("P"); // Jugador
                 } else {
-                    dibujar_celda(mapa_nivel1[f*15+c]);
+                    dibujar_celda(mapa_nivel1[f*60+c]);
                 }
             }
             printf("\n");
@@ -60,7 +60,7 @@ int main() {
                 posX =fsig; 
                 posY=csig;
 
-                char celda_destino = mapa_nivel1[fsig*15+csig];
+                char celda_destino = mapa_nivel1[fsig*20+csig];
             }
         }
     }
