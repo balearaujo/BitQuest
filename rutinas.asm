@@ -2,6 +2,8 @@ bits 64
 default rel 
 
 global validar_mov
+global cnt_monedas
+
 section .text
 
 ; es valido (1) o es pared (0) en rax
@@ -21,4 +23,25 @@ validar_mov:
 .es_pared: 
     xor rax, rax        
     ret
+
+cnt_monedas:
+    xor rax, rax        
+    xor r10, r10      
+
+.ciclo:
+    cmp r10, rdx     ;recorre las celdas  
+    je .fin     ;si termina, salta a la etiqueta fin
+    mov r11b, [rcx + r10]  
+    cmp r11b, r8b       ;compara el caracter con M
+    jne .siguiente
+    inc rax         ;incrementa contador 
+;   
+
+.siguiente:
+    inc r10 ; si no es igual el caracter, incrementa el indice de casillas recorridas
+    jmp .ciclo ;repite el ciclo 
+
+.fin:
+    ret
+
 ;fin
