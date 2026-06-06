@@ -18,6 +18,9 @@ int main() {
     printf("Iniciando juego...\n");
     printf("Jugador en: (%d, %d)\n", posX, posY);
     long long totalMonedas=cnt_monedas(mapa_nivel1, 3600, 'M');
+    printf("Monedas a recolectar en el mapa: %lld\n", totalMonedas);
+    printf("Seleccione cualquier tecla para continuar: \n");
+    getchar();
 
     while (1) {
         system("cls");

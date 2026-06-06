@@ -3,7 +3,7 @@
 
 #define MAPA_ANCHO 60
 #define MAPA_ALTO 60
-
+//tiene como errores, creo q tiene caracteres d más
 char mapa_nivel1[3600]=
 "############################################################" 
 "#P............######.......................................#"
