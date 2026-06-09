@@ -75,8 +75,8 @@ int main() {
                 char celda_destino = mapa_nivel1[posX*60+posY];
                 if (celda_destino=='E'){
                     system("cls");
-                    printf("Ganaste!!!");
-                    printf("Conseguiste: %d de %d", monedasJugador, totalMonedas);
+                    printf("Ganaste!!!\n");
+                    printf("Conseguiste: %d de %d ", monedasJugador, totalMonedas);
                     printf("Presione cualquier tecla para salir...\n");
                     getch();
                     break;
