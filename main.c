@@ -71,10 +71,15 @@ int main() {
                 if (mapa_nivel1[posX * 60 + posY] == 'M') {
                     mapa_nivel1[posX * 60 + posY] = '.'; // Se vuelve suelo
                 }
-                char celda_destino = mapa_nivel1[fsig*20+csig];
+
+                char celda_destino = mapa_nivel1[posX*60+posY];
                 if (celda_destino=='E'){
+                    system("cls");
                     printf("Ganaste!!!");
                     printf("Conseguiste: %d de %d", monedasJugador, totalMonedas);
+                    printf("Presione cualquier tecla para salir...\n");
+                    getch();
+                    break;
                 }
             }
         }
