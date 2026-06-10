@@ -3,6 +3,7 @@ default rel
 
 global validar_mov
 global cnt_monedas
+global detectar_obj
 
 section .text
 
@@ -45,3 +46,18 @@ cnt_monedas:
     ret
 
 ;fin
+
+detectar_obj:
+    mov rax, r8         
+    imul rax, rdx       
+    add rax, r9         
+    
+    movzx r10d, byte [rcx + rax] 
+    mov r11b, [rsp + 40]         
+    cmp r10b, r11b      ; compara si es el objeto buscado
+    je .encontrado
+    xor rax, rax        ; no esta (0) 
+    ret
+.encontrado:
+    mov rax, 1          ; si esta(1)
+    ret

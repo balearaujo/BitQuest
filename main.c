@@ -6,6 +6,7 @@
 void dibujar_celda(char celda);
 extern long long validar_mov(char *m, int f, int c);
 extern long long cnt_monedas(char *m, int t, char moneda);
+extern long long detectar_obj(char *m,int ancho, int f, int c, char obj);
 
 int main() {
     
@@ -13,6 +14,8 @@ int main() {
     int posY=1;
     int fsig, csig;
     int fInicio, cInicio;
+    int tieneLlave=0;
+    char celda_destino;
     char tecla;
 
     printf("Iniciando juego...\n");
@@ -26,7 +29,6 @@ int main() {
         system("cls");
 
         // Ventana 20X20
-        //ya ahora si
         fInicio=posX-10; //aqui la mitad
         if (fInicio<0) fInicio=0;
         if (fInicio>40) fInicio=40; //11-7=4 d antes  ==== 60-20=40
@@ -65,21 +67,40 @@ int main() {
         if (fsig!=posX || csig!=posY) {
             // Llamamos a validarMov en el .asm
             if (validar_mov(mapa_nivel1, fsig, csig)==1) {
-                posX =fsig; 
-                posY=csig;
+                celda_destino=mapa_nivel1[fsig*60+csig];
 
-                if (mapa_nivel1[posX * 60 + posY] == 'M') {
-                    mapa_nivel1[posX * 60 + posY] = '.'; // Se vuelve suelo
-                }
+                if(celda_destino=='D'){
+                    if (tieneLlave){
+                        printf("\nPuerta abierta\n");
+                        mapa_nivel1[posX * 60 + posY] = '.';
+                        posX=fsig;
+                        posY=csig;
+                        
+                    }else{
+                        printf("\nPuerta cerrada, necesitas la llave bro\n");
+                    }
 
-                char celda_destino = mapa_nivel1[posX*60+posY];
-                if (celda_destino=='E'){
+                    getch();
+                }else if (celda_destino == 'K') {
+                    tieneLlave=1;
+                    mapa_nivel1[posX * 60 + posY] = '.';
+                    posX=fsig;
+                    posY=csig;
+                    printf("\n wowowow lograste conseguir la llave magica");
+                    getch();
+                } else if (celda_destino=='E'){
                     system("cls");
                     printf("Ganaste!!!\n");
                     printf("Conseguiste: %d de %d ", monedasJugador, totalMonedas);
                     printf("Presione cualquier tecla para salir...\n");
                     getch();
                     break;
+                }else{
+                    posX=fsig;
+                    posY=csig;
+                    if (mapa_nivel1[posX*60+posY]== 'M'){
+                        mapa_nivel1[posX*60+posY]='.';
+                    }
                 }
             }
         }
