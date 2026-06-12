@@ -60,8 +60,12 @@ int main() {
 
         printf("Monedas recolectadas: %lld \n", monedasJugador);
         printf("Total de espacios en el nivel: %lld \n", totalEspacios);
+        if (tieneLlave==0){ printf("No tienes llave");
+        } else {
+            printf("Tiene llaves la llave!"); }
+        
         printf ("Controles: W A S D | SALIR: Q\n");
-
+        
         // Captura de movimiento 
         tecla=getch();
         if (tecla=='q'||tecla=='Q') break;
@@ -102,6 +106,7 @@ int main() {
                     system("cls");
                     printf("Ganaste!!!\n");
                     printf("Conseguiste: %d de %d ", monedasJugador, totalMonedas);
+                    printf("Niveles completados: %d", nivel);
 
                     switch (nivel){
                         case 1: //si esta en el nivel 1 avanza a mapa 2
