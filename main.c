@@ -7,7 +7,7 @@ void dibujar_celda(char celda);
 extern long long validar_mov(char *m, int f, int c);
 extern long long cnt_monedas(char *m, int t, char moneda);
 extern long long detectar_obj(char *m,int ancho, int f, int c, char obj);
-
+extern long long cnt_espacios(char *m, int t, char espacios);
 int main() {
     
     int posX=1;
@@ -25,8 +25,9 @@ int main() {
 
 
     long long totalMonedas=cnt_monedas(mapa_nivel1, 3600, 'M');
-
+    long long totalEspacios=cnt_espacios(mapa_nivel1, 3600, '.');
     printf("Monedas a recolectar en el mapa: %lld\n", totalMonedas);
+    printf("Total de espacios para moverse: %lld\n", totalEspacios);
     printf("Seleccione cualquier tecla para continuar: \n");
     getchar();
 
@@ -58,6 +59,7 @@ int main() {
         long long monedasJugador=totalMonedas-monedasRestantes;
 
         printf("Monedas recolectadas: %lld \n", monedasJugador);
+        printf("Total de espacios en el nivel: %lld \n", totalEspacios);
         printf ("Controles: W A S D | SALIR: Q\n");
 
         // Captura de movimiento 
@@ -81,7 +83,7 @@ int main() {
                 if(celda_destino=='D'){
                     if (tieneLlave){
                         printf("\nLograste abrir la puerta del mal\n");
-                        mapa_nivel1[fsig * 60 + csig] = '.';
+                        mapa_actual[fsig * 60 + csig] = '.';
                         posX=fsig;
                         posY=csig;
                     }else{
@@ -124,6 +126,7 @@ int main() {
                     posY=1;
                     tieneLlave=0;
                     totalMonedas =cnt_monedas(mapa_actual,3600, 'M');
+                    totalEspacios=cnt_espacios(mapa_actual, 3600, '.');
                 }else{
                     posX=fsig;
                     posY=csig;
