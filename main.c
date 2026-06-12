@@ -101,20 +101,29 @@ int main() {
                     printf("Ganaste!!!\n");
                     printf("Conseguiste: %d de %d ", monedasJugador, totalMonedas);
 
-                    if (nivel==1){
+                    switch (nivel){
+                        case 1: //si esta en el nivel 1 avanza a mapa 2
                         printf("Presione cualquier tecla para avanzar al nivel 2...\n");
                         getch();
-                        nivel=2;
                         mapa_actual=mapa_nivel2;
-                        posX=1;
-                        posY=1;
-                        tieneLlave=0;
-                        totalMonedas =cnt_monedas(mapa_actual,3600, 'M');
-                    } else {
+                        break;
+
+                        case 2:
+                        printf("Presione cualquier tecla para avanzar al nivel 3...\n");
+                        getch();
+                        mapa_actual=mapa_nivel3; //si nivel 2 a mapa 3
+                        break;
+
+                        default:
                         printf("Presione cualquier tecla para salir\n");
                         getch();
                         break;
                     }
+                    nivel++; //incrementar nivel
+                    posX=1;  //resetear otras variables
+                    posY=1;
+                    tieneLlave=0;
+                    totalMonedas =cnt_monedas(mapa_actual,3600, 'M');
                 }else{
                     posX=fsig;
                     posY=csig;
