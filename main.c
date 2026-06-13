@@ -4,10 +4,12 @@
 #include "mapas.h"
 
 void dibujar_celda(char celda);
-extern long long validar_mov(char *m, int f, int c);
+extern long long validar_mov(char *m, int columnas, int f, int c);
 extern long long cnt_monedas(char *m, int t, char moneda);
 extern long long detectar_obj(char *m,int ancho, int f, int c, char obj);
 extern long long cnt_espacios(char *m, int t, char espacios);
+extern long long puntaje ( long long monedas, long long pasos, long long niveles);
+
 int main() {
     
     int posX=1;
@@ -19,6 +21,7 @@ int main() {
     char tecla;
     char *mapa_actual;
     int nivel=1;
+    int pasos=0;
 
     printf("Iniciando juego...\n");
     printf("Jugador en: (%d, %d)\n", posX, posY);
@@ -26,6 +29,7 @@ int main() {
 
     long long totalMonedas=cnt_monedas(mapa_nivel1, 3600, 'M');
     long long totalEspacios=cnt_espacios(mapa_nivel1, 3600, '.');
+
     printf("Monedas a recolectar en el mapa: %lld\n", totalMonedas);
     printf("Total de espacios para moverse: %lld\n", totalEspacios);
     printf("Seleccione cualquier tecla para continuar: \n");
@@ -55,14 +59,21 @@ int main() {
             }
             printf("\n");
         }
+
+
         long long monedasRestantes=cnt_monedas(mapa_actual, 3600, 'M');
         long long monedasJugador=totalMonedas-monedasRestantes;
 
-        printf("Monedas recolectadas: %lld \n", monedasJugador);
+
+        printf("NIVEL %d\n", nivel);
+        printf("Monedas recolectadas: %lld / %lld\n", monedasJugador);
         printf("Total de espacios en el nivel: %lld \n", totalEspacios);
-        if (tieneLlave==0){ printf("No tienes llave");
+        printf("Pasos: %d\n", pasos);
+
+        if (tieneLlave==0){ 
+            printf("No tienes la llave\n");
         } else {
-            printf("Tiene llaves la llave!"); }
+            printf("Tiene llaves la llave!\n"); }
         
         printf ("Controles: W A S D | SALIR: Q\n");
         
@@ -73,15 +84,15 @@ int main() {
         fsig=posX;
         csig=posY;
 
-        if (tecla=='w' || tecla=='W') fsig--;
-        else if (tecla=='s' || tecla=='S') fsig++;
-        else if (tecla=='a' || tecla=='A') csig--;
-        else if (tecla=='d' || tecla=='D') csig++;
+        int movimiento=0;
+        if (tecla=='w' || tecla=='W') {fsig--; movimiento=1;}
+        else if (tecla=='s' || tecla=='S') {fsig++; movimiento=1;}
+        else if (tecla=='a' || tecla=='A') {csig--; movimiento=1;}
+        else if (tecla=='d' || tecla=='D') {csig++; movimiento=1;}
 
-        // valida con ensambladror
-        if (fsig!=posX || csig!=posY) {
-            // Llamamos a validarMov en el .asm
-            if (validar_mov(mapa_actual, fsig, csig)==1) {
+        if (movimiento){
+            if (validar_mov(mapa_actual, 60, fsig, csig)==1) {
+                pasos++;
                 celda_destino=mapa_actual[fsig*60+csig];
 
                 if(celda_destino=='D'){
@@ -105,7 +116,7 @@ int main() {
                 else if (celda_destino=='E'){
                     system("cls");
                     printf("Ganaste!!!\n");
-                    printf("Conseguiste: %d de %d ", monedasJugador, totalMonedas);
+                    printf("Conseguiste: %d de %d\n", monedasJugador, totalMonedas);
                     printf("Niveles completados: %d", nivel);
 
                     switch (nivel){
@@ -132,6 +143,7 @@ int main() {
                     tieneLlave=0;
                     totalMonedas =cnt_monedas(mapa_actual,3600, 'M');
                     totalEspacios=cnt_espacios(mapa_actual, 3600, '.');
+                    pasos=0;
                 }else{
                     posX=fsig;
                     posY=csig;
