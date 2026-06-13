@@ -6,6 +6,7 @@
 #define SYM_LLAVE 190
 #define SYM_PUERTA 177
 #define SYM_SALIDA 175
+#define SYM_PARED4 254
 
 void dibujar_celda(char celda) {
     switch(celda) {
@@ -14,6 +15,7 @@ void dibujar_celda(char celda) {
         case 'K': printf("\x1b[38;5;130m%c\x1b[0m", SYM_LLAVE); break;
         case 'D': printf("\x1b[38;5;196m%c\x1b[0m", SYM_PUERTA); break;
         case 'E': printf("\x1b[36m%c\x1b[0m", SYM_SALIDA); break;
+        case '|': printf("\x1b[38;5;202m%c\x1b[0m", SYM_PARED4); break;
         case '.': printf("\x1b[37;1m%c\x1b[0m", 250); break; 
         default:  printf(" "); break;
     }
