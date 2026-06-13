@@ -66,7 +66,7 @@ int main() {
 
 
         printf("NIVEL %d\n", nivel);
-        printf("Monedas recolectadas: %lld / %lld\n", monedasJugador);
+        printf("Monedas recolectadas: %lld / %lld\n", monedasJugador, totalMonedas);
         printf("Total de espacios en el nivel: %lld \n", totalEspacios);
         printf("Pasos: %d\n", pasos);
 
@@ -110,14 +110,18 @@ int main() {
                     mapa_actual[fsig* 60 + csig] = '.';
                     posX=fsig;
                     posY=csig;
-                    printf("\n wowowow lograste conseguir la llave magica");
+                    printf("\n wowowow lograste conseguir la llave magica\n");
                     getch();
                 } 
                 else if (celda_destino=='E'){
                     system("cls");
+                    long long puntaje_final=puntaje(monedasJugador,pasos,nivel);
                     printf("Ganaste!!!\n");
-                    printf("Conseguiste: %d de %d\n", monedasJugador, totalMonedas);
-                    printf("Niveles completados: %d", nivel);
+                    printf("\n===Estadisticas del nivel===\n");
+                    printf("Pasos realizados: %d\n", pasos);
+                    printf("Monedas recolectadas: %lld de %lld\n", monedasJugador, totalMonedas);
+                    printf("Nivel completado: %d\n", nivel);
+                    printf("PUNTUACION TOTAL: %lld puntos\n",puntaje_final);
 
                     switch (nivel){
                         case 1: //si esta en el nivel 1 avanza a mapa 2

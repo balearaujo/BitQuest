@@ -83,8 +83,8 @@ cnt_espacios:
 ;fin
 
 puntaje:
-    imul rcx, 50  ;monedas valen 50
-    imul r8, 100    ;niveles completados valen 100
+    imul rcx, 150  ;monedas valen 150
+    imul r8, 200    ;niveles completados valen 200
     add rcx, r8     ;puntos acumulados en rcx
     imul rdx, 2        ;cantidad de pasos *2
     sub rcx, rdx    ;restar al puntaje por cantidad de pasos realizados
