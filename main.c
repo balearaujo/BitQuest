@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <stdlib.h>
 #include "mapas.h"
+#include "Bienvenida.h"
 
 void dibujar_celda(char celda);
 extern long long validar_mov(char *m, int columnas, int f, int c);
@@ -25,6 +26,7 @@ int main() {
     int pasos_totales=0;
     int monedas_total_jugador=0;
 
+    pantallaBienvenida();
     printf("Iniciando juego...\n");
     printf("Jugador en: (%d, %d)\n", posX, posY);
 
