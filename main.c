@@ -159,9 +159,9 @@ int main() {
                     monedas_total_jugador +=monedasJugador;
                     long long puntaje_final=puntaje(monedas_total_jugador,pasos_totales,nivel);
 
-                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                    printf("         JUEGO COMPLETADO        \n");
-                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                    printf("\033[1;32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                    printf("              VICTORIA!          \n");
+                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m\n\n");
                     printf("\n====Estadisticas del nivel=====\n");
                     printf("Pasos realizados: %d\n", pasos);
                     printf("Monedas recolectadas: %lld de %lld\n", monedasJugador, totalMonedas);
