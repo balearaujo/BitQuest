@@ -95,7 +95,18 @@ int main() {
         else if (tecla=='d' || tecla=='D') {csig++; movimiento=1;}
 
         if (movimiento){
-            if (validar_mov(mapa_actual, 60, fsig, csig)==1) {
+
+            long long estado_mov=validar_mov(mapa_actual,60, fsig,csig);
+            if (estado_mov==2){
+                system ("cls");
+                printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                printf("              PERDISTE           \n");
+                printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                printf("Presiona cualquier tecla para salir...\n");
+                getch();
+                return 0;
+            }
+            else if (estado_mov==1){
                 pasos++;
                 celda_destino=mapa_actual[fsig*60+csig];
 
@@ -141,6 +152,12 @@ int main() {
                         printf("Presione cualquier tecla para avanzar al nivel 3...\n");
                         getch();
                         mapa_actual=mapa_nivel3; //si nivel 2 a mapa 3
+                        break;
+
+                        case 3:
+                        printf("Presione cualquier tecla para avanzar al nivel 4...\n");
+                        getch();
+                        mapa_actual=mapa_nivel4; //si nivel 2 a mapa 3
                         break;
 
                         default:

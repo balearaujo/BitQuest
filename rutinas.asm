@@ -17,12 +17,18 @@ validar_mov:
     movzx r10d, byte [rcx+ rax] 
     cmp r10b, 35 ; 35== '#'
     je .es_pared ; si es igual a # salta a la etiqueta d pared
+    cmp r10b, 124; 124== '|'
+    je .es_fuego; si es igual a | salta a la etiqueta d fuego 
     mov rax, 1 ; si no es pared, rax es igual a 1 y hace válido el movimiento       
     ret
 
 ;rax=0 y llega a paerd
 .es_pared: 
     xor rax, rax        
+    ret
+
+.es_fuego:
+    mov rax, 2
     ret
 
 cnt_monedas:
