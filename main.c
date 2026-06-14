@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "mapas.h"
 #include "Bienvenida.h"
+#include <windows.h>
 
 void dibujar_celda(char celda);
 extern long long validar_mov(char *m, int columnas, int f, int c);
@@ -112,11 +113,19 @@ int main() {
 
                 if (detectar_obj(mapa_actual,60,fsig,csig,'D')==1){
                     if (tieneLlave){
+                        Beep(440, 60);  
+                        Beep(554, 60);  
+                        Beep(659, 60); 
+                        Beep(880, 150);
                         printf("\nLograste abrir la puerta del mal\n");
                         mapa_actual[fsig * 60 + csig] = '.';
                         posX=fsig;
                         posY=csig;
+
                     }else{
+                        Beep(180, 100); 
+                        Beep(150, 100); 
+                        Beep(130, 250);
                         printf("\nPuerta cerrada, necesitas la llave bro\n");
                     }
                     getch();
@@ -125,10 +134,17 @@ int main() {
                     mapa_actual[fsig* 60 + csig] = '.';
                     posX=fsig;
                     posY=csig;
+                    Beep(523, 60);  
+                    Beep(659, 60);  
+                    Beep(784, 60);  
+                    Beep(1046, 200);
                     printf("\n wowowow lograste conseguir la llave magica\n");
                     getch();
                 } 
                 else if (detectar_obj(mapa_actual,60,fsig,csig,'E')==1){
+                    Beep(600, 80);
+                    Beep(400, 80);
+                    Beep(800, 200);
                     system("cls");
                     pasos_totales +=pasos;
                     monedas_total_jugador +=monedasJugador;
@@ -183,6 +199,8 @@ int main() {
                     posY=csig;
                     if (celda_destino== 'M'){
                         mapa_actual[posX*60+posY]='.';
+                        Beep(987, 80);
+                        Beep(1318,120);
                     }
                     
                 }
