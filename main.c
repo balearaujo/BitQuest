@@ -12,6 +12,15 @@ extern long long detectar_obj(char *m,int ancho, int f, int c, char obj);
 extern long long cnt_espacios(char *m, int t, char espacios);
 extern long long puntaje ( long long monedas, long long pasos, long long niveles);
 
+void mostrarAdvertencia(){
+    system ("cls");
+                printf("\033[1;31m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                printf("          NIVEL DE FUEGO         \n");
+                printf("      No toques las paredes!     \n");
+                printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m\n\n");
+                printf("Presiona cualquier tecla...      \n");
+                getch();
+}
 int main() {
     
     int posX=1;
@@ -150,8 +159,10 @@ int main() {
                     monedas_total_jugador +=monedasJugador;
                     long long puntaje_final=puntaje(monedas_total_jugador,pasos_totales,nivel);
 
-                    printf("Ganaste!!!\n");
-                    printf("\n===Estadisticas del nivel===\n");
+                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                    printf("         JUEGO COMPLETADO        \n");
+                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                    printf("\n====Estadisticas del nivel=====\n");
                     printf("Pasos realizados: %d\n", pasos);
                     printf("Monedas recolectadas: %lld de %lld\n", monedasJugador, totalMonedas);
                     printf("Nivel completado: %d\n", nivel);
@@ -174,11 +185,12 @@ int main() {
                         printf("Presione cualquier tecla para avanzar al nivel 4...\n");
                         getch();
                         mapa_actual=mapa_nivel4; //si nivel 2 a mapa 3
+                        mostrarAdvertencia();
                         break;
 
                         default:
                         system("cls");
-                        printf("Juego completado!!");
+                        printf("Juego completado!!\n");
                         printf("Monedas totales recolectadas: %lld\n", monedas_total_jugador);
                         printf("Pasos totales: %d\n", pasos_totales);
                         printf("Puntaje final: %lld\n",puntaje_final);
