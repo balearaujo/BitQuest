@@ -6,7 +6,7 @@
 
 void pantallaBienvenida() {
 
-    char* logo[] = {
+    char* WIN[] = {
         "  ####   #  #####   ###   #   #  #####  ####  ##### ",
         "  #   #  #    #    #   #  #   #  #     #        #   ",
         "  ####   #    #    #   #  #   #  ###    ####    #   ",
@@ -18,8 +18,8 @@ void pantallaBienvenida() {
     printf("\n");
 
     for (int i=0; i<5; i++) {
-        for (int j=0; logo[i][j]!='\0'; j++) {
-            if (logo[i][j]=='#') {
+        for (int j=0; WIN[i][j]!='\0'; j++) {
+            if (WIN[i][j]=='#') {
                 printf("\x1b[36;1m%c\x1b[0m", BLOQUES_KIUT);
             } else {
                 printf(" ");
@@ -33,6 +33,38 @@ void pantallaBienvenida() {
 
     printf("           [ RECOLECTA LAS MONEDAS Y ESCAPA ]                    \n");
     printf("             >> Presiona ENTER para jugar <<                     \n\n");
+}
+
+
+void pantallaWin() {
+
+    char* WIN[] = {
+        "                #       #  #####   ##    #                      ",
+        "                #   #   #    #     # #   #                      ",
+        "                #   #   #    #     #  #  #                      ",
+        "                #   #   #    #     #   # #                      ",
+        "                #### ####  #####   #    ##                      "
+    };
+
+    for(int i=0; i<54; i++){ printf("\x1b[38;5;21m%c\x1b[0m", BLOQUES_KIUT); }
+    printf("\n");
+
+    for (int i=0; i<5; i++) {
+        for (int j=0; WIN[i][j]!='\0'; j++) {
+            if (WIN[i][j]=='#') {
+                printf("\x1b[36;1m%c\x1b[0m", BLOQUES_KIUT);
+            } else {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+
+    for(int i=0; i<54; i++) {printf("\x1b[38;5;21m%c\x1b[0m", BLOQUES_KIUT);}
+    printf("\n");
+
+    printf("           [ HAZ LLEGADO AL FINAL DEL DESAFIO ]                    \n");
+    printf("             >>   Cargando estadisticas   <<                     \n\n");
 }
 
 #endif 

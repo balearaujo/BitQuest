@@ -189,9 +189,9 @@ int main() {
                     long long puntaje_final=puntaje(monedas_total_jugador,pasos_totales,nivel);
 
                     printf("\033[1;32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                    printf("              VICTORIA!          \n");
-                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m\n\n");
-                    printf("\n====Estadisticas del nivel=====\n");
+                    printf("             VICTORIA!           \n");
+                    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m\n");
+                    printf("===   Estadisticas del nivel  ===\n\n");
                     printf("Pasos realizados: %d\n", pasos);
                     printf("Monedas recolectadas: %lld de %lld\n", monedasJugador, totalMonedas);
                     printf("Nivel completado: %d\n", nivel);
@@ -221,13 +221,16 @@ int main() {
                         break;
 
                         default:
+                        long long puntuajeFini=puntaje(monedas_total_jugador, pasos_totales, nivel);
                         system("cls");
-                        printf("Juego completado!!\n");
+
+                        pantallaWin();
                         printf("Monedas totales recolectadas: %lld\n", monedas_total_jugador);
                         printf("Pasos totales: %d\n", pasos_totales);
                         printf("Puntaje final: %lld\n",puntaje_final);
                         printf("Niveles completados: %d\n", nivel);
-                        printf("Presione cualquier tecla para salir\n");
+                        printf(">> PUNTUCACION TOTAL: %lld\n\n", puntuajeFini);
+                        printf("\x1b[36;1m¡Gracias por jugar! Presiona una tecla para salir... \x1b[0m\n");
                         getch();
                         free(mapa_actual);
                         return 0;
