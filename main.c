@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-#include "mapas.h"
 #include "Bienvenida.h"
 #include <windows.h>
 
@@ -11,6 +10,37 @@ extern long long cnt_monedas(char *m, int t, char moneda);
 extern long long detectar_obj(char *m,int ancho, int f, int c, char obj);
 extern long long cnt_espacios(char *m, int t, char espacios);
 extern long long puntaje ( long long monedas, long long pasos, long long niveles);
+
+
+char* cargar_mapa_desde_txt(const char* nombre_archivo, int tamano) {
+    int i=0; //contador inicia en 0
+    char ch; //el char que leemos
+    
+    FILE* archivo=fopen(nombre_archivo, "r"); //nombre del archivo leer
+    if (archivo==NULL) { //si el archivo esta vacio no lo guardes 
+        printf("No esta el archivo %s\n", nombre_archivo);
+        getch();
+        exit(1); 
+    }
+
+    char* mapa=(char*)malloc((tamano+1)*sizeof(char)); //guardar espacio en memoria para el mapa
+    if (mapa==NULL) {
+        printf("Error: No se guardo bien la memoria\n"); //revisa que si haya entrado
+        fclose(archivo);
+        exit(1);
+    }
+
+    while ((ch=fgetc(archivo))!=EOF&& i<tamano) {
+        if (ch!='\n' && ch!='\r') { //si es salto de linea que no se guarde
+            mapa[i]=ch; //guarda el char que leimos
+            i++;
+        }
+    }
+    mapa[i]='\0'; //termina la cadena
+
+    fclose(archivo); //cierra el archivo
+    return mapa;
+}
 
 void mostrarAdvertencia(){
     system ("cls");
@@ -40,16 +70,15 @@ int main() {
     printf("Iniciando juego...\n");
     printf("Jugador en: (%d, %d)\n", posX, posY);
 
+    mapa_actual = cargar_mapa_desde_txt("mapa_nivel1.txt", 3600);
 
-    long long totalMonedas=cnt_monedas(mapa_nivel1, 3600, 'M');
-    long long totalEspacios=cnt_espacios(mapa_nivel1, 3600, '.');
+    long long totalMonedas=cnt_monedas(mapa_actual, 3600, 'M');
+    long long totalEspacios=cnt_espacios(mapa_actual, 3600, '.');
 
     printf("Monedas a recolectar en el mapa: %lld\n", totalMonedas);
     printf("Total de espacios para moverse: %lld\n", totalEspacios);
     printf("Seleccione cualquier tecla para continuar: \n");
     getchar();
-
-    mapa_actual=mapa_nivel1;
 
     while (1) {
         system("cls");
@@ -172,19 +201,22 @@ int main() {
                         case 1: //si esta en el nivel 1 avanza a mapa 2
                         printf("Presione cualquier tecla para avanzar al nivel 2...\n");
                         getch();
-                        mapa_actual=mapa_nivel2;
+                        free(mapa_actual); 
+                        mapa_actual = cargar_mapa_desde_txt("mapa_nivel2.txt", 3600); 
                         break;
 
                         case 2:
                         printf("Presione cualquier tecla para avanzar al nivel 3...\n");
                         getch();
-                        mapa_actual=mapa_nivel3; //si nivel 2 a mapa 3
+                        free(mapa_actual); // Liberamos la memoria del mapa viejo
+                        mapa_actual = cargar_mapa_desde_txt("mapa_nivel3.txt", 3600); // Cargamos 
                         break;
 
                         case 3:
                         printf("Presione cualquier tecla para avanzar al nivel 4...\n");
                         getch();
-                        mapa_actual=mapa_nivel4; //si nivel 2 a mapa 3
+                        free(mapa_actual); // Liberamos la memoria del mapa viejo
+                        mapa_actual = cargar_mapa_desde_txt("mapa_nivel4.txt", 3600); // Cargamo
                         mostrarAdvertencia();
                         break;
 
@@ -197,6 +229,7 @@ int main() {
                         printf("Niveles completados: %d\n", nivel);
                         printf("Presione cualquier tecla para salir\n");
                         getch();
+                        free(mapa_actual);
                         return 0;
                     }
                     nivel++; //incrementar nivel
