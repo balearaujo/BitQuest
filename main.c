@@ -2,8 +2,10 @@
 #include <conio.h>
 #include <stdlib.h>
 #include "Bienvenida.h"
-#include <windows.h>
+#include <windows.h> //libreria usada para sonido 
 
+
+//Declaración funciones nasm 
 void dibujar_celda(char celda);
 extern long long validar_mov(char *m, int columnas, int f, int c);
 extern long long cnt_monedas(char *m, int t, char moneda);
@@ -42,6 +44,7 @@ char* cargar_mapa_desde_txt(const char* nombre_archivo, int tamano) {
     return mapa;
 }
 
+//Advertencia para nivel 4 
 void mostrarAdvertencia(){
     system ("cls");
                 printf("\033[1;31m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -51,8 +54,9 @@ void mostrarAdvertencia(){
                 printf("Presiona cualquier tecla...      \n");
                 getch();
 }
+
 int main() {
-    
+    //Declaración variables 
     int posX=1;
     int posY=1;
     int fsig, csig;
@@ -66,6 +70,7 @@ int main() {
     int pasos_totales=0;
     int monedas_total_jugador=0;
 
+    //llamada de pantalla inicio antes del juego 
     pantallaBienvenida();
     printf("Iniciando juego...\n");
     printf("Jugador en: (%d, %d)\n", posX, posY);
@@ -75,14 +80,16 @@ int main() {
     long long totalMonedas=cnt_monedas(mapa_actual, 3600, 'M');
     long long totalEspacios=cnt_espacios(mapa_actual, 3600, '.');
 
+    //Datos para el jugador antes de iniciar el juego 
     printf("Monedas a recolectar en el mapa: %lld\n", totalMonedas);
     printf("Total de espacios para moverse: %lld\n", totalEspacios);
     printf("Seleccione cualquier tecla para continuar: \n");
     getchar();
 
+
+    // Ciclo principal del juego que maneja el renderizado, controles y lógica por turno
     while (1) {
         system("cls");
-
         // Ventana 20X20
         fInicio=posX-10; //aqui la mitad
         if (fInicio<0) fInicio=0;
@@ -107,7 +114,7 @@ int main() {
         long long monedasRestantes=cnt_monedas(mapa_actual, 3600, 'M');
         long long monedasJugador=totalMonedas-monedasRestantes;
 
-
+        //Estadisticas presentadas en cada nivel 
         printf("NIVEL %d\n", nivel);
         printf("Monedas recolectadas: %lld / %lld\n", monedasJugador, totalMonedas);
         printf("Total de espacios en el nivel: %lld \n", totalEspacios);
@@ -127,6 +134,7 @@ int main() {
         fsig=posX;
         csig=posY;
 
+        //validacion teclas de movimiento 
         int movimiento=0;
         if (tecla=='w' || tecla=='W') {fsig--; movimiento=1;}
         else if (tecla=='s' || tecla=='S') {fsig++; movimiento=1;}
@@ -134,9 +142,8 @@ int main() {
         else if (tecla=='d' || tecla=='D') {csig++; movimiento=1;}
 
         if (movimiento){
-
             long long estado_mov=validar_mov(mapa_actual,60, fsig,csig);
-            if (estado_mov==2){
+            if (estado_mov==2){  // valor que devuelve nasm al tocar pared de fuego 
                 system ("cls");
                 printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                 printf("              PERDISTE           \n");
@@ -149,9 +156,10 @@ int main() {
                 pasos++;
                 celda_destino=mapa_actual[fsig*60+csig];
 
+                    //Detectar PUERTA
                 if (detectar_obj(mapa_actual,60,fsig,csig,'D')==1){
                     if (tieneLlave){
-                        Beep(440, 60);  
+                        Beep(440, 60);  //sonido 
                         Beep(554, 60);  
                         Beep(659, 60); 
                         Beep(880, 150);
@@ -161,26 +169,29 @@ int main() {
                         posY=csig;
 
                     }else{
-                        Beep(180, 100); 
+                        Beep(180, 100); //sonido 
                         Beep(150, 100); 
                         Beep(130, 250);
                         printf("\nPuerta cerrada, necesitas la llave bro\n");
                     }
                     getch();
+
+                    //Detectar LLAVE
                 }else if (detectar_obj(mapa_actual,60,fsig,csig,'K')==1) {
                     tieneLlave=1;
                     mapa_actual[fsig* 60 + csig] = '.';
                     posX=fsig;
                     posY=csig;
-                    Beep(523, 60);  
+                    Beep(523, 60);  //sonido 
                     Beep(659, 60);  
                     Beep(784, 60);  
                     Beep(1046, 200);
                     printf("\n wowowow lograste conseguir la llave magica\n");
                     getch();
                 } 
+                //Detectar EXIT
                 else if (detectar_obj(mapa_actual,60,fsig,csig,'E')==1){
-                    Beep(600, 80);
+                    Beep(600, 80); //sonido 
                     Beep(400, 80);
                     Beep(800, 200);
                     system("cls");
@@ -188,6 +199,7 @@ int main() {
                     monedas_total_jugador +=monedasJugador;
                     long long puntaje_final=puntaje(monedas_total_jugador,pasos_totales,nivel);
 
+                    //pantalla de éxito con el resumen de estadísticas y el puntaje obtenido por nivel
                     printf("\033[1;32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                     printf("             VICTORIA!           \n");
                     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m\n");
@@ -197,6 +209,8 @@ int main() {
                     printf("Nivel completado: %d\n", nivel);
                     printf("PUNTAJE ACUMULADO: %lld puntos\n",puntaje_final);
 
+
+                    //SWITCH PARA CAMBIO DE NIVEL 
                     switch (nivel){
                         case 1: //si esta en el nivel 1 avanza a mapa 2
                         printf("Presione cualquier tecla para avanzar al nivel 2...\n");
@@ -205,25 +219,28 @@ int main() {
                         mapa_actual = cargar_mapa_desde_txt("mapa_nivel2.txt", 3600); 
                         break;
 
-                        case 2:
+                        case 2: //si esta en el nivel 2 avanza a mapa 3
                         printf("Presione cualquier tecla para avanzar al nivel 3...\n");
                         getch();
                         free(mapa_actual); // Liberamos la memoria del mapa viejo
                         mapa_actual = cargar_mapa_desde_txt("mapa_nivel3.txt", 3600); // Cargamos 
                         break;
 
-                        case 3:
+                        case 3: //si esta en el nivel 3 avanza a mapa 4
                         printf("Presione cualquier tecla para avanzar al nivel 4...\n");
                         getch();
                         free(mapa_actual); // Liberamos la memoria del mapa viejo
-                        mapa_actual = cargar_mapa_desde_txt("mapa_nivel4.txt", 3600); // Cargamo
+                        mapa_actual = cargar_mapa_desde_txt("mapa_nivel4.txt", 3600); // Cargamos
                         mostrarAdvertencia();
                         break;
 
+                        // Fin del juego, calcula el puntaje final definitivo y presenta la pantalla de cierre
                         default:
                         long long puntuajeFini=puntaje(monedas_total_jugador, pasos_totales, nivel);
                         system("cls");
 
+
+                        //Estadisticas finales mostradas en pantalla final 
                         pantallaWin();
                         printf("Monedas totales recolectadas: %lld\n", monedas_total_jugador);
                         printf("Pasos totales: %d\n", pasos_totales);
@@ -245,6 +262,7 @@ int main() {
                 }else{
                     posX=fsig;
                     posY=csig;
+                    // Actualiza la posición del jugador y recolecta monedas si pisa una 'M'
                     if (celda_destino== 'M'){
                         mapa_actual[posX*60+posY]='.';
                         Beep(987, 80);

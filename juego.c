@@ -8,6 +8,7 @@
 #define SYM_SALIDA 175
 #define SYM_PARED4 254
 
+ //funcion dibujar celda imprime los caracteres ascii y con color
 void dibujar_celda(char celda) {
     switch(celda) {
         case '#': printf("\x1b[38;5;21m%c\x1b[0m", SYM_PARED); break;

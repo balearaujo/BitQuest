@@ -21,15 +21,15 @@ validar_mov:
     je .es_fuego; si es igual a | salta a la etiqueta d fuego 
     mov rax, 1 ; si no es pared, rax es igual a 1 y hace válido el movimiento       
     ret
-
 ;rax=0 y llega a paerd
 .es_pared: 
     xor rax, rax        
     ret
-
 .es_fuego:
     mov rax, 2
     ret
+
+;fin validar mov
 
 cnt_monedas:
     xor rax, rax        
@@ -50,7 +50,7 @@ cnt_monedas:
 .fin_monedas:
     ret
 
-;fin
+;fin contar monedas
 
 detectar_obj:
     mov rax, r8         
@@ -66,7 +66,7 @@ detectar_obj:
 .encontrado:
     mov rax, 1          ; si esta(1)
     ret
-
+;fin detectar objeto 
 
 cnt_espacios:
     xor rax, rax        
@@ -86,7 +86,7 @@ cnt_espacios:
 .fin_espacios:
     ret
 
-;fin
+;fin contar espacios 
 
 puntaje:
     imul rcx, 150  ;monedas valen 150
@@ -101,4 +101,4 @@ puntaje:
 .fin_puntaje:
     mov rax, rcx
     ret
-;fin
+;fin puntaje
